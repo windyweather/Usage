@@ -27,19 +27,17 @@ public class UsageEvents extends UsageMainView implements ActionListener {
 			public void run() {
 				try {
 					UsageEvents window = new UsageEvents();
-					window.frmUsageOfDisk.setVisible(true);
+					frmUsageOfDisk.setVisible(true);
 					
-					
-					window.addWindowListener(new WindowAdapter() {
+					// add a window closing listener to catch the [X] button
+					frmUsageOfDisk.addWindowListener(new WindowAdapter() {
 						@Override
 						public void windowClosing(WindowEvent e) {
 							System.out.println( "main windowClosing" );
-							// Find ourselves in the great beyond
-							UsageMainView win = (UsageMainView)e.getWindow();
-							win.windowClosingEvent(e); // call us, which will call our child too
+							// call a method to save our stuff
+							window.closeOurApplication();
 						}
 					});
-				window.setActiveWindowClosingEvent();
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -111,20 +109,24 @@ public class UsageEvents extends UsageMainView implements ActionListener {
 		printSysOut("UsageEvents constructor reached");
 		
 		super.initialize();
-		
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				printSysOut("UsageEvents - windowClosing");
-				// Find ourselves in the great beyond
-				UsageMainView win = (UsageMainView)e.getWindow();
-				win.windowClosingEvent(e); // call us, which will call our child too
-			}
-		});
-		
-		
+
 		
 		// restore defaults
+	}
+	
+	/*
+	 * close down our app. Save whatever we need to on the way out.
+	 * This scheme catches the [X] button in the window title bar.
+	 */
+	public void closeOurApplication()
+	{
+		printSysOut( "UsageEvents closeOurApplication - save your stuff here" );
+		// write the defaults file
+		//saveDefaultsFile();
+		
+		// Need to exit since our base class is different
+		// from the previous version of this program.
+	    System.exit(0);
 	}
 	
 	// catch the window closing event
@@ -132,14 +134,9 @@ public class UsageEvents extends UsageMainView implements ActionListener {
 	//@Override
 	public void windowClosingEvent(WindowEvent e) {
 		
-		printSysOut( "windowClosing - save your stuff here" );
-		// write the defaults file
-		//saveDefaultsFile();
-		
-		// Need to exit since our base class is different
-		// from the previous version of this program.
-	    System.exit(0);
-	 
+		printSysOut( "UsageEvents windowClosing" );
+
+		closeOurApplication();
 	}
 	
 	
@@ -214,14 +211,16 @@ public class UsageEvents extends UsageMainView implements ActionListener {
         case "btnClose":{
         	// do as little as possible
         	// allow the framework to do it all
-        	dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        	//frmUsageOfDisk.dispatchEvent(new WindowEvent(frmUsageOfDisk, WindowEvent.WINDOW_CLOSING));
+        	closeOurApplication();
         	break;
         	
         }
         case "mntmQuit": {
         	// do as little as possible
         	// allow the framework to do it all
-        	dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        	//frmUsageOfDisk.dispatchEvent(new WindowEvent(frmUsageOfDisk, WindowEvent.WINDOW_CLOSING));
+        	closeOurApplication();
         	break;
         	
         }

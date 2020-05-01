@@ -35,12 +35,13 @@ import java.beans.EventHandler;
 
 import javax.swing.SwingConstants;
 
-public class UsageMainView extends JFrame implements ActionListener {
+public class UsageMainView implements ActionListener {
 
 	// get rid of a warning about serialization.
 	private static final long serialVersionUID = 19837505L;
 	
-	protected JFrame frmUsageOfDisk;
+	// make this static so that main can add a window closing handler
+	static protected JFrame frmUsageOfDisk;
 	protected JComboBox<String> cbPathChoice;
 	protected JLabel lbStatus;
 	protected JTree treeFileInfo;
@@ -87,66 +88,24 @@ public class UsageMainView extends JFrame implements ActionListener {
 	 */
 	public UsageMainView() {
 		initialize();
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		/*
-		// this one is NULL
-		Window pview = (Window)getParent();
-		
-		pview.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.out.println( "viewParent windowClosing" );
-				// Find ourselves in the great beyond
-				UsageMainView win = (UsageMainView)e.getWindow();
-				win.windowClosingEvent(e); // call us, which will call our child too
-			}
-		});
-		*/
-		/*
-		// this one is null too
-		Window pwin = (Window)frmUsageOfDisk.getParent();
-		
-		pwin.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.out.println( "frmUsageOfDisk Parent windowClosing" );
-				// Find ourselves in the great beyond
-				UsageMainView win = (UsageMainView)e.getWindow();
-				win.windowClosingEvent(e); // call us, which will call our child too
-			}
-		});
-		*/
-		
 		
 		frmUsageOfDisk.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				System.out.println( "frmUsageOfDisk windowClosing" );
 				// Find ourselves in the great beyond
-				UsageMainView win = (UsageMainView)e.getWindow();
-				win.windowClosingEvent(e); // call us, which will call our child too
-			}
-		});
-		
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.out.println( "UsageMainView windowClosing" );
-				// Find ourselves in the great beyond
-				UsageMainView win = (UsageMainView)e.getWindow();
-				win.windowClosingEvent(e); // call us, which will call our child too
+				//UsageMainView win = (UsageMainView)e.getWindow();
+				//win.windowClosingEvent(e); // call us, which will call our child too
 			}
 		});
 		
 
-		
-		
 	}
 	
 	/*
 	 * Call this sometime after we are active
 	 */
+	/*
 	public void setActiveWindowClosingEvent()
 	{
 		Window activeWindow = FocusManager.getCurrentManager().getActiveWindow();
@@ -162,7 +121,7 @@ public class UsageMainView extends JFrame implements ActionListener {
 			});
 		}
 	}
-
+	*/
 	// we will overload this in the child class
 	// use the same one for every action
 	@Override
